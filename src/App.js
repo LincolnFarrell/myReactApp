@@ -1,8 +1,9 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import { HashRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { login, logout, isClientTokenAvailable, isAuthTokenAvailable, isRefreshTokenAvailable, fetchClientToken, refreshAuthToken } from './API';
 import Home from './pages/Home';
+import Library from './pages/Library';
 import Search from './pages/Search';
 import Artist from './pages/Artist';
 import Album from './pages/Album';
@@ -33,13 +34,13 @@ export default function App() {
     <div className='App'>
       <div className='header'>
         <div className='logo'>
-          <a href={window.location.origin + '#'}>Spotify</a>
+          <a href={window.location.origin}>Spotify</a>
         </div>
         <div className='search'>
           <input type='text' placeholder='Search...' 
             onKeyDown={event => {
               if (event.key == 'Enter') { 
-                window.location.href = window.location.origin + ('/#/search/' + event.target.value); 
+                window.location.pathname = ('/search/' + event.target.value); 
           }}}/>
         </div>
         <div className='account'>
@@ -53,16 +54,17 @@ export default function App() {
       <div className='content'>
         <div className="sidebar" style={{marginLeft: sidebarLeft}}>
           <a href="javascript:void(0)" onClick={toggleSidebar}>&times;</a>
-          <a href="#">Home</a>
-          <a href="#/library">Library</a>
-          <a href="#/account">Account</a>
-          <a href="#/settings">Settings</a>
+          <a href={window.location.origin}>Home</a>
+          <a href={window.location.origin + '/library'}>Library</a>
+          <a href={window.location.origin + '/account'}>Account</a>
+          <a href={window.location.origin + '/settings'}>Settings</a>
         </div>
         <main>
-          <HashRouter>
+          <BrowserRouter>
             <Routes>
               <Route path='/' element={<Home/>}/>
-              <Route path='/%2Fcallback' element={<Callback/>}/>
+              <Route path='/callback' element={<Callback/>}/>
+              <Route path='/library' element={<Library/>}/>
               <Route path='/search/:term' element={<Search/>}/>
               <Route path='/artist/:id' element={<Artist/>}/>
               <Route path='/album/:id' element={<Album/>}/>
@@ -70,7 +72,7 @@ export default function App() {
               <Route path='/track/:id' element={<Track/>}/>
               <Route path='/settings' element={<Settings/>}/>
             </Routes>
-          </HashRouter>
+          </BrowserRouter>
         </main>
       </div>
       <div className="playbar">

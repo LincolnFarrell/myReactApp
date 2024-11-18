@@ -18,15 +18,15 @@ const scopes = scopeList.replace(' ', '%20');
 
 const CLIENT_ID = '65e1d8434d1c47e680ceccd9b0d80b58';
 const CLIENT_SECRET = 'c61c4d5ee0d044eaacbe7cdca0678ae7';
-const REDIRECT_URI = 'http://localhost:3000/#/callback';
+const REDIRECT_URI = 'http://localhost:3000/callback';
 const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${scopes}`;
 
 const headers = {
     'Content-Type': 'application/json', 
-    'Authorization': `Bearer ${localStorage.getItem('spotify_client_token')}`
+    'Authorization': `Bearer ${isAuthTokenAvailable() ? localStorage.getItem('spotify_auth_token') : localStorage.getItem('spotify_client_token')}`
 }
 
-export async function fetchAuthToken({ code }) {
+export async function fetchAuthToken(code) {
     const authHeader = btoa(CLIENT_ID + ':' + CLIENT_SECRET);
     const response = await fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
@@ -46,9 +46,7 @@ export async function fetchAuthToken({ code }) {
     localStorage.setItem('spotify_auth_token_expiry', Date.now());
     localStorage.setItem('spotify_auth_token', data.access_token);
     localStorage.setItem('spotify_refresh_token', data.refresh_token);
-    window.location.href = window.location.origin;
-    window.location.hash = '';
-    window.location.reload();
+    window.location.replace('/');
 }
 
 export async function refreshAuthToken() {
@@ -65,7 +63,6 @@ export async function refreshAuthToken() {
     localStorage.setItem('spotify_auth_token_expiry', Date.now());
     localStorage.setItem('spotify_auth_token', data.access_token);
     localStorage.setItem('spotify_refresh_token', data.refresh_token);
-    window.location.hash = '';
     window.location.reload();
 }
 
@@ -82,7 +79,6 @@ export async function fetchClientToken() {
     const data = await response.json();
     localStorage.setItem('spotify_client_token_expiry', Date.now());
     localStorage.setItem('spotify_client_token', data.access_token);
-    window.location.hash = '';
     window.location.reload();
 }
 
@@ -118,7 +114,6 @@ export function logout() {
     localStorage.removeItem('spotify_auth_token_expiry');
     localStorage.removeItem('spotify_auth_token');
     localStorage.removeItem('spotify_refresh_token');
-    window.location.hash = '';
     window.location.reload();
 }
 
@@ -151,6 +146,17 @@ export async function getContentFromCollectionId(collectionId, collectionType, i
             //empty
         }), {
             method: 'GET',
+            headers
+    });
+    return await response.json();
+}
+
+export async function getContentFromFollowed(type) {
+    const response = await fetch('https://api.spotify.com/v1/me/following?' 
+        + qs.stringify({
+            type: type
+        }), {
+            method: 'GET', 
             headers
     });
     return await response.json();

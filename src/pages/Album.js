@@ -31,7 +31,7 @@ export default function Album() {
                     <p>{capitalize(album?.type || '')}</p>
                     <h1 style={{fontSize: '50px'}}>{album?.name}</h1>
                     <p>
-                        {artists.map((artist, i) => <>{i > 0 && ', '}<a href={window.location.origin + '/#/artist/' + artist.id}>{artist.name}</a></>)} 
+                        {artists.map((artist, i) => <>{i > 0 && ', '}<a href={window.location.origin + '/artist/' + artist.id}>{artist.name}</a></>)} 
                         {album ? (
                             ' • ' + album?.release_date + ' • ' + 
                             album?.total_tracks + ' songs, ' + msToMins(duration)
