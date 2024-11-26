@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getContentFromId } from '../API';
 import List from '../components/List';
 import { msToMins, capitalize } from '../Utils';
@@ -26,12 +26,12 @@ export default function Album() {
     return (
         <>
             <div className='header-card'>
-                <img src={album?.images[1].url}/>
+                <img src={album?.images[1]?.url || album?.images[0]?.url}/>
                 <div>
                     <p>{capitalize(album?.type || '')}</p>
                     <h1 style={{fontSize: '50px'}}>{album?.name}</h1>
                     <p>
-                        {artists.map((artist, i) => <>{i > 0 && ', '}<a href={window.location.origin + '/artist/' + artist.id}>{artist.name}</a></>)} 
+                        {artists.map((artist, i) => <>{i > 0 && ', '}<Link to={'/artist/' + artist.id}>{artist.name}</Link></>)} 
                         {album ? (
                             ' • ' + album?.release_date + ' • ' + 
                             album?.total_tracks + ' songs, ' + msToMins(duration)
