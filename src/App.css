@@ -3,6 +3,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: Geneva, Verdana, sans-serif
 }
 html, body, #root, .app {
   background-color: #000000;
@@ -26,36 +27,117 @@ main {
   background-color: #121212;
   overflow-y: scroll;
 }
+hr {
+  background: #3e3e3e;
+  border: 0;
+  height: 1px;
+  margin: 0 4px;
+}
 
 
 
 .header {
   display: flex;
   align-items: center;
-}
-.header .logo {
-  padding: 16px;
+  padding: 8px;
+  padding-bottom: 0px;
+  padding-left: 16px;
 }
 .header > * {
   flex: 1;
+}
+.spotify {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.sidebar-button {
+  margin-bottom: 0px;
+  border-radius: 50%;
+  height: 36px;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+  margin-left: 116px;
 }
 .search {
   display: flex;
   justify-content: center;
 }
 .search input {
-  color: black;
+  border: none;
+  border-radius: 20px;
+  background-color: #1f1f1f;
+  color: white;
   width: 300px;
-  padding: 8px;
+  padding: 12px;
 }
 .account {
-  padding: 16px;
   display: flex;
   justify-content: right;
+  position: relative;
 }
-.profile img {
-  width: 40px;
+.avatar, .logo {
+  margin-bottom: 0px;
+  border-radius: 50%;
   height: 40px;
+  aspect-ratio: 1/1;
+  cursor: pointer;
+}
+
+.drop-down {
+  position: absolute;
+  top: 100%;
+  width: 240px;
+  background: #1F1F1F;
+  margin: 10px;
+  border-radius: 8px;
+  z-index: 2;
+}
+.drop-down * {
+  text-decoration: none;
+}
+.drop-down h3 {
+  padding: 16px;
+  padding-bottom: 8px;
+}
+.drop-down > div {
+  display: grid;
+}
+.drop-down > div div {
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.drop-down > div div:hover {
+  background: #3e3e3e;
+}
+
+
+
+.info-drop-down {
+  position: absolute;
+  top: 100%;
+  width: 300px;
+  background: #1F1F1F;
+  margin: 10px;
+  border-radius: 8px;
+  z-index: 2;
+}
+.info-drop-down > div {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.info-drop-down > div input {
+  border: none;
+  border-radius: 20px;
+  background-color: #1f1f1f;
+  color: white;
+  padding: 12px;
 }
 
 
@@ -80,17 +162,88 @@ main {
 
 
 
-.playbar {
+.playback {
   display: flex;
-  place-content: center;
   height: 80px;
+  padding: 16px;
+  padding-top: 8px;
+}
+.playback * {
+  text-decoration: none;
+}
+.playback > div {
+  flex: 1
+}
+.playback-info {
+  display: flex;
+}
+.playback-info > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.playback-info img {
+  width: 60px;
+  border-radius: 4px;
+  margin-right: 16px;
+}
+.artists {
+  display: flex;
+}
+.artists * {
+  font-size: 12px;
+  color: #adadad;
+  white-space: pre;
+}
+.playback-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.pause {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin: 0 24px;
+}
+.pause img {
+  width: 18px;
+  height: 18px;
+}
+.shuffle, .repeat {
+  width: 18px;
+  height: 18px;
+}
+.timeline, .buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 4px;
+}
+.timeline p {
+  font-size: 12px;
+  color: #adadad;
+}
+.bar {
+  margin: 8px;
+  background-color: #3e3e3e;
+  border-radius: 4px;
+}
+.progress {
+  border-radius: 4px;
 }
 
 
 
+.shelf, .tracklist {
+  margin-bottom: 3.5vh;
+}
 .shelf > div {
   position: relative;
-  cursor: pointer;
 }
 .shelf > div button {
   font-size: xx-large;
@@ -126,6 +279,7 @@ main {
   display: flex;
 }
 .card {
+  cursor: pointer;
   width: 10vw;
   height: 10vw;
   justify-content: top;
@@ -143,7 +297,8 @@ main {
 .card p {
   padding-top: 10px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
+  word-break: normal;
 }
 .card img {
   width: 100%;
@@ -157,10 +312,12 @@ main {
   display: flex;
   flex-direction: row;
   margin: 14px 0px;
+  margin-bottom: 5vh;
 }
 .header-card img {
-  width: 15vw;
+  height: 15vw;
   border-radius: 4px;
+  aspect-ratio: 1/1;
 }
 .header-card > div {
   padding: 14px;
@@ -175,10 +332,32 @@ main {
 .track:hover {
   background-color: #1F1F1F;
 }
-.track p {
+.track p, .track-title {
   padding: 8px 16px;
 }
 .track-image {
-  width: 2vw;
   border-radius: 4px;
+  aspect-ratio: 1/1;
+  width: 2.5vw;
+}
+.tracklist > h2 {
+  margin: 10px;
+}
+.tracklist * {
+  text-decoration: none;
+}
+
+.content-control {
+  margin-top: 16px;
+  display: flex;
+  gap: 16px;
+}
+.content-control button {
+  background: white;
+  color: black;
+  border: none;
+  padding: 8px;
+  border-radius: 32px;
+  font-weight: 600;
+  cursor: pointer;
 }

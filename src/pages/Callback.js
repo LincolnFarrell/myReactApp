@@ -19,4 +19,4 @@ export default function Callback() {
             <p>Processing your login...</p>
         </div>
     );
-  };
+};

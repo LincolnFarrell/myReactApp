@@ -10,6 +10,10 @@ export default function Search() {
     const [playlists, setPlaylists] = useState([]);
 
     useEffect(() => {
+        setArtists([]);
+        setAlbums([]);
+        setPlaylists([]);
+        
         async function getResults() {
             setArtists((await getContentFromSearch(query, 'artist')).artists.items);
             setAlbums((await getContentFromSearch(query, 'album')).albums.items);
