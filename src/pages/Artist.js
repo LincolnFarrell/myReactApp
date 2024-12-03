@@ -38,7 +38,7 @@ export default function Artist() {
             setArtist(await getContentFromId(artistId, 'artist'));
             setTopTracks((await getTopTracksFromArtist(artistId)).tracks);
             setAlbums((await getContentFromCollectionId(artistId, 'artist', 'album')).items);
-            setRelatedArtists((await getRelatedArtists(artistId)).artists);
+            //DEPRECATED: setRelatedArtists((await getRelatedArtists(artistId)).artists);
         } getResults();
     }, [artistId]);
 

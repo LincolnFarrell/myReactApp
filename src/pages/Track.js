@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { doesUserFollowTrack, followTrack, getContentFromId, isAuthTokenAvailable, unfollowTrack } from '../API';
+import { doesUserFollowTrack, followTrack, getContentFromId, isAuthTokenAvailable, recommendedByTrack, unfollowTrack } from '../API';
 import { msToMins, capitalize } from '../Utils';
+import Carousel from '../components/Carousel';
 
 export default function Album() {
     const trackId = useParams().id;
@@ -9,6 +10,7 @@ export default function Album() {
     const [album, setAlbum] = useState();
     const [artists, setArtists] = useState([]);
     const [isFollowed, setIsFollowed] = useState(false);
+    const [recommendedByTrack, setRecommendedByTrack] = useState([]);
 
     const follow = () => {
         async function getResults() {
@@ -27,6 +29,7 @@ export default function Album() {
         setAlbum();
         setArtists([]);
         setIsFollowed(false);
+        setRecommendedByTrack([]);
 
         async function getResults() {
             const data = await getContentFromId(trackId, 'track');
@@ -34,6 +37,7 @@ export default function Album() {
             setIsFollowed((await doesUserFollowTrack(trackId))[0]);
             setAlbum(data?.album);
             setArtists(data.artists);
+            //DEPRECATED: setRecommendedByTrack((await getRecommendedBySeed(data?.id, null)).tracks);
         } getResults();
     }, [trackId]);
 
@@ -57,6 +61,7 @@ export default function Album() {
                         }
                 </div>
             </div>
+            {recommendedByTrack.length > 0 && <Carousel title='Recommended Tracks' contentType='track' content={recommendedByTrack}/>}
         </>
     );
 }

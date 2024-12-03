@@ -220,6 +220,9 @@ export async function getTopTracksFromArtist(id) {
     if (!hasError(data)) return data;
 }
 
+///
+// DEPRECATED AS OF 24-11-27
+///
 export async function getRelatedArtists(id) {
   const response = await fetch(`https://api.spotify.com/v1/artists/${id}/related-artists`
         + qs.stringify({
@@ -232,6 +235,9 @@ export async function getRelatedArtists(id) {
   if (!hasError(data)) return data;
 }
 
+///
+// DEPRECATED AS OF 24-11-27
+///
 export async function getFeaturedPlaylists() {
     const response = await fetch('https://api.spotify.com/v1/browse/featured-playlists'
         + qs.stringify({
@@ -256,6 +262,9 @@ export async function getNewReleases() {
     if (!hasError(data)) return data;
 }
 
+///
+// DEPRECATED AS OF 24-11-27
+///
 export async function getRecommendedBySeed(seed_tracks, seed_artists) {
     const params = {};
     if (seed_tracks) params.seed_tracks = seed_tracks;
