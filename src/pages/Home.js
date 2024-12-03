@@ -26,16 +26,16 @@ export default function Home() {
                 const recently_played = (await getRecentlyPlayed()).items; setRecentlyPlayed(recently_played);
                 if (recently_played.length > 0) {
                     // setSeedTrack(recently_played?.[0]?.track?.name);
-                    // setRecommendedByTrack((await getRecommendedBySeed(recently_played?.[0]?.track?.id, null)).tracks);
+                    //DEPRECATED: setRecommendedByTrack((await getRecommendedBySeed(recently_played?.[0]?.track?.id, null)).tracks);
                 }
                 const top_artists = (await getTopContent('artist', 'short_term')).items; setTopArtists(top_artists);
                 if (top_artists.length > 0) {
                     // setSeedArtist(top_artists?.[0]?.name);
-                    // setRecommendedByArtist((await getRecommendedBySeed(null, top_artists?.[0]?.id)).tracks);
+                    //DEPRECATED: setRecommendedByArtist((await getRecommendedBySeed(null, top_artists?.[0]?.id)).tracks);
                 }
                 setTopTracks((await getTopContent('track', 'short_term')).items);
             }
-            setFeaturedPlaylists((await getFeaturedPlaylists()).playlists.items);
+            //DEPRECATED: setFeaturedPlaylists((await getFeaturedPlaylists()).playlists.items);
             setNewReleases((await getNewReleases()).albums.items);
         } getResults();
     }, []);
